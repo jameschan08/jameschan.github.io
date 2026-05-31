@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>James Chan | Performance Marketing Leader</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,700&family=Jost:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'custom-warm': '#FDF9F5',
+                        'brand-orange': '#E16C4F',
+                        'brand-teal': '#476D6D',
+                        'deep-black': '#1A1A1A',
+                    },
+                    fontFamily: {
+                        sans: ['Jost', 'sans-serif'],
+                        display: ['Playfair Display', 'serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Jost', sans-serif; overflow-x: hidden; scroll-behavior: smooth; }
+		.page-content { display: none !important; }
+		.page-content.active { display: block !important; animation: fadeIn 0.8s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        
+        @keyframes scrollLeft { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .carousel-container { overflow: hidden; position: relative; width: 100%; border-radius: 20px; }
+        .carousel-track { display: flex; width: max-content; animation: scrollLeft 40s linear infinite; }
+        .carousel-item { width: 200px; padding: 20px; flex-shrink: 0; text-align: center; }
+        .carousel-item img { max-height: 90px; margin: 0 auto 10px; filter: grayscale(40%); opacity: 0.9; }
+        .carousel-item span { font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #666; }
+
+        .glass-curve { background: rgba(255, 255, 255, 0.75); backdrop-filter: blur(15px); border-radius: 40px; }
+        .nav-link.active { color: #E16C4F; font-weight: 700; border-bottom: 2px solid #E16C4F; }
+        .skill-bar { height: 8px; width: 22px; border-radius: 2px; background: #eee; display: inline-block; margin-right: 4px; }
+        .skill-bar.active { background: #E16C4F; }
+        .job-detail { display: none; }
+        .job-detail.active { display: block; }
+    .portfolio-card {
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(180deg, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.88) 100%);
+    }
+
+    .portfolio-card {
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(180deg, rgba(255,255,255,0.97) 0%, rgba(255,255,255,0.9) 100%);
+    }
+
+    .portfolio-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, rgba(225,108,79,0.05) 0%, rgba(71,109,109,0.035) 100%);
+        pointer-events: none;
+    }
+
+    .portfolio-card > * {
+        position: relative;
+        z-index: 1;
+    }
+
+    .case-card {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .case-brand-side {
+        border-bottom: 1px solid rgba(26,26,26,0.08);
+        padding-bottom: 1.5rem;
+    }
+
+    .case-index {
+        font-size: clamp(4rem, 8vw, 6rem);
+        line-height: 0.9;
+        font-weight: 900;
+        color: #476D6D;
+        opacity: 0.12;
+        margin-bottom: 1.25rem;
+    }
+
+    .case-logo-frame {
+        height: 86px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        margin-bottom: 1.5rem;
+    }
+
+    .case-logo {
+        max-height: 64px;
+        max-width: 170px;
+        object-fit: contain;
+        filter: grayscale(8%);
+        opacity: 0.96;
+    }
+
+    .portfolio-kicker {
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.28em;
+        color: #E16C4F;
+        margin-bottom: 0.85rem;
+    }
+
+    .case-title {
+        font-size: clamp(1.8rem, 3vw, 2.5rem);
+        line-height: 1.1;
+        font-weight: 800;
+        margin-bottom: 0.9rem;
+    }
+
+    .portfolio-period {
+        font-size: 0.98rem;
+        color: #6b7280;
+        line-height: 1.8;
+        max-width: 32ch;
+    }
+
+    .case-metrics-side {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .metric-box {
+        background: rgba(255,255,255,0.72);
+        border: 1px solid rgba(26,26,26,0.08);
+        border-radius: 1.5rem;
+        padding: 1.25rem 1.25rem 1rem;
+        backdrop-filter: blur(10px);
+    }
+
+    .metric-top {
+        display: flex;
+        align-items: baseline;
+        gap: 0.3rem;
+        margin-bottom: 0.45rem;
+    }
+
+    .metric-value {
+        font-size: clamp(2.6rem, 4vw, 4.2rem);
+        line-height: 0.9;
+        font-weight: 800;
+        letter-spacing: -0.06em;
+        color: #E16C4F;
+    }
+
+    .metric-symbol {
+        font-size: 1.05rem;
+        font-weight: 800;
+        color: #E16C4F;
+    }
+
+    .metric-label {
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 0.22em;
+        font-weight: 700;
+        color: #476D6D;
+        margin-bottom: 0.85rem;
+    }
+
+    .metric-bar {
+        width: 100%;
+        height: 6px;
+        background: rgba(26,26,26,0.08);
+        border-radius: 999px;
+        overflow: hidden;
+    }
+
+    .metric-fill {
+        height: 100%;
+        width: 0;
+        border-radius: 999px;
+        background: linear-gradient(90deg, #E16C4F 0%, #476D6D 100%);
+        transition: width 1.6s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .restructure-list {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.9rem;
+        margin: 1.5rem 0 2rem;
+    }
+
+    .restructure-pill {
+        padding: 0.95rem 1rem;
+        border-radius: 999px;
+        background: rgba(255,255,255,0.74);
+        border: 1px solid rgba(26,26,26,0.08);
+        font-size: 0.9rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: #475569;
+        text-align: center;
+    }
+
+    .mini-logo-carousel {
+        overflow: hidden;
+        position: relative;
+        width: 100%;
+        border-radius: 1.75rem;
+        background: rgba(255,255,255,0.78);
+        border: 1px solid rgba(26,26,26,0.06);
+        padding: 1.35rem 0;
+    }
+
+    .mini-logo-track {
+        display: flex;
+        width: max-content;
+        animation: scrollLeft 28s linear infinite;
+        align-items: center;
+    }
+
+    .mini-logo-item {
+        width: 200px;
+        padding: 0 1.5rem;
+        flex-shrink: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .mini-logo-item img {
+        max-height: 56px;
+        max-width: 140px;
+        object-fit: contain;
+        filter: grayscale(10%);
+        opacity: 0.96;
+    }
+
+    .mini-logo-item .text-logo {
+        font-size: 1rem;
+        font-weight: 800;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: #6b7280;
+        white-space: nowrap;
+    }
+
+    @media (min-width: 1024px) {
+        .case-card {
+            grid-template-columns: minmax(220px, 0.92fr) minmax(0, 1.35fr);
+            gap: 2rem;
+            align-items: stretch;
+        }
+
+        .case-brand-side {
+            border-bottom: none;
+            border-right: 1px solid rgba(26,26,26,0.08);
+            padding-bottom: 0;
+            padding-right: 2rem;
+        }
+    }
+
+    @media (max-width: 767px) {
+        .restructure-list {
+            grid-template-columns: 1fr;
+        }
+
+        .mini-logo-item {
+            width: 160px;
+        }
+
+        .mini-logo-item img {
+            max-height: 44px;
+            max-width: 110px;
+        }
+    }
+</style>
+</head>
+<body class="bg-custom-warm text-deep-black flex flex-col min-h-screen">
+
+    <nav class="fixed top-0 w-full z-50 bg-custom-warm/95 border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-8 py-5 flex justify-between items-center">
+            <a href="#" onclick="showPage('home')" class="font-display text-3xl tracking-tighter text-brand-orange">James Chan</a>
+            <div class="flex items-center space-x-10">
+                <div class="hidden md:flex space-x-8 text-[15px] font-bold uppercase tracking-widest">
+                    <a href="javascript:void(0)" onclick="showPage('home')" id="nav-home" class="nav-link active">Main</a>
+                    <a href="javascript:void(0)" onclick="showPage('expertise')" id="nav-expertise" class="nav-link">Expertise</a>
+                    <a href="javascript:void(0)" onclick="showPage('portfolio')" id="nav-portfolio" class="nav-link">Portfolio</a>
+                </div>
+                <a href="javascript:void(0)" onclick="showPage('work-with-me')" class="px-7 py-2.5 text-[11px] font-bold uppercase tracking-widest text-white bg-deep-black hover:bg-brand-orange transition-all rounded-full">Work with me</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow">
+        <div id="home" class="page-content active mt-20">
+            <section class="relative h-[90vh] flex items-center overflow-hidden">
+                <div class="absolute inset-0 z-0"><img src="assets/Main-Banner.png" class="w-full h-full object-cover"></div>
+                <div class="relative z-10 glass-curve p-12 md:p-20 ml-8 md:ml-20 max-w-5xl shadow-2xl border border-white/50">
+                    <p class="text-xs font-extrabold uppercase tracking-[0.3em] text-brand-teal mb-6">Strategic eCommerce Architect</p>
+                    <h1 class="text-4xl md:text-7xl font-semibold leading-tight tracking-tight mb-5">
+                        <span class="text-2xl md:text-4xl block mb-2 tracking-[0.03em] font-normal">Transforming ad spend into</span>
+                        <span class="block mb-4 leading-[1.2]">
+							<span class="text-brand-orange font-extrabold uppercase">SCALABLE REVENUE</span> & <span class="text-brand-orange font-extrabold uppercase">MARKET DOMINANCE</span>.
+						</span>
+                    </h1>
+                    <p class="text-xl text-gray-700 font-light leading-loose">
+					Results-driven performance and eCommerce marketer focused on
+					<span class="font-bold">revenue efficiency</span>, <span class="font-bold">ROAS growth</span>,
+					and <span class="font-bold">conversion outcomes</span> through full-funnel strategy and data-driven planning.
+					</p>
+                </div>
+            </section>
+
+           <section class="py-32 px-12 md:px-24">
+				<div class="grid md:grid-cols-12 gap-16">
+					<!-- 左欄：About Me + 頭像 -->
+					<div class="md:col-span-4 space-y-8">
+						<h2 class="text-6xl font-extrabold uppercase leading-tight">About<br>Me</h2>
+						<!-- 頭像：左欄下方置中 -->
+						<div class="flex justify-center">
+							<div class="w-44 h-44 rounded-full overflow-hidden border-4 border-white/30 shadow-2xl">
+								<img src="assets/JamesChan.jpg" alt="James Chan" class="w-full h-full object-cover">
+							</div>
+						</div>
+					</div>
+					
+					<!-- 右欄：文字維持原位 -->
+					<div class="md:col-span-8 text-2xl text-gray-600 leading-[2.2] font-light space-y-6">
+						<p>Results-driven <span class="font-bold text-brand-orange">performance and eCommerce marketer</span> with 6+ years of experience across agency and platform environments.</p>
+						<p>Proven ability to improve <span class="font-bold">revenue efficiency, ROAS, and conversion outcomes</span> through paid media, data analysis, and growth planning.</p>
+						<p>Experienced in contributing to <span class="font-bold">critical marketing decisions</span> by aligning campaign strategy with creative direction, promotional mechanics, brand positioning, audience segmentation, and commercial priorities.</p>
+						<p>Quick to adapt to <span class="font-bold">AI and emerging digital tools</span> to improve workflow efficiency, accelerate analysis, and enhance day-to-day marketing execution.</p>
+					</div>
+				</div>
+			</section>
+
+
+            <section class="py-32 px-12 md:px-24 bg-white">
+                <div class="grid md:grid-cols-12 gap-16">
+                    <h2 class="md:col-span-4 text-7xl font-extrabold uppercase leading-none">Why<br>Choose Me</h2>
+                    <div class="md:col-span-8 grid md:grid-cols-2 gap-y-20 gap-x-12">
+						<div>
+							<h4 class="text-3xl font-bold text-brand-orange uppercase mb-4">Performance Ownership</h4>
+							<p class="text-gray-500 text-2xl leading-relaxed">Direct ownership of eCommerce KPIs including revenue, ROAS, CPA, and purchase growth across enterprise retail accounts.</p>
+						</div>
+						<div>
+							<h4 class="text-3xl font-bold text-brand-orange uppercase mb-4">Commercial Impact</h4>
+							<p class="text-gray-500 text-2xl leading-relaxed">Track record of improving revenue efficiency through restructuring, optimization, and conversion-led media planning.</p>
+						</div>
+						<div>
+							<h4 class="text-3xl font-bold text-brand-orange uppercase mb-4">Strategic Input</h4>
+							<p class="text-gray-500 text-2xl leading-relaxed">Able to advise beyond media execution on creative direction, promotional mechanics, brand positioning, audience strategy, and competitor differentiation.</p>
+						</div>
+						<div>
+							<h4 class="text-3xl font-bold text-brand-orange uppercase mb-4">AI-Enhanced Execution</h4>
+							<p class="text-gray-500 text-2xl leading-relaxed">Quick to adopt AI and emerging digital tools to accelerate analysis, streamline workflows, and support faster marketing decisions.</p>
+						</div>
+					</div>
+                </div>
+            </section>
+
+            <section class="py-32 px-12 md:px-24 bg-brand-teal text-white">
+                <div class="grid md:grid-cols-12 gap-16">
+                    <h2 class="md:col-span-4 text-6xl font-extrabold uppercase">The<br>Numbers</h2>
+                    <div class="md:col-span-8 grid grid-cols-2 gap-10">
+						<div class="bg-white/10 p-12 rounded-3xl border border-white/20">
+							<p class="text-8xl font-extrabold mb-4 tracking-tighter">28+</p>
+							<p class="text-sm font-bold uppercase tracking-[0.3em] opacity-60">Global Brands Served</p>
+						</div>
+						<div class="bg-white/10 p-12 rounded-3xl border border-white/20">
+							<p class="text-8xl font-extrabold mb-4 tracking-tighter">6+</p>
+							<p class="text-sm font-bold uppercase tracking-[0.3em] opacity-60">Years Experience</p>
+						</div>
+						<div class="bg-white/10 p-12 rounded-3xl border border-white/20">
+							<p class="text-6xl font-extrabold mb-4 tracking-tighter">+135%</p>
+							<p class="text-sm font-bold uppercase tracking-[0.3em] opacity-60">ROAS Growth Highlight</p>
+						</div>
+						<div class="bg-white/10 p-12 rounded-3xl border border-white/20">
+							<p class="text-6xl font-extrabold mb-4 tracking-tighter">-45.5%</p>
+							<p class="text-sm font-bold uppercase tracking-[0.3em] opacity-60">Cost Reduction Highlight</p>
+						</div>
+					</div>
+                </div>
+            </section>
+
+            <section class="pt-32 pb-16 px-12 md:px-24">
+                <div class="grid md:grid-cols-12 gap-16 items-start">
+                    <div class="md:col-span-4 pr-10 border-r border-gray-100 text-center">
+                        <h2 class="text-6xl font-extrabold uppercase mb-12 leading-tight">Industries</h2>
+                        <ul class="text-lg font-bold uppercase tracking-widest text-[#465581] space-y-6">
+                            <li>Jewelry & Luxury Goods</li>
+                            <li>Banking & Finance</li>
+                            <li>Insurance</li>
+                            <li>FMCG</li>
+							<li>Food & Beverages</li>
+                            <li>Beauty & Skincare</li>
+                            <li>Telecom & Electronics</li>
+							<li>Health Care</li>
+							<li>Fashion</li>
+							<li>NGO</li>
+                        </ul>
+                    </div>
+                    <div class="md:col-span-8 carousel-container pl-10">
+                        <h2 class="text-6xl font-extrabold uppercase mb-12 text-center">My Clients</h2>
+                        <div class="carousel-track mb-10">
+                            <div class="carousel-item"><img src="assets/logos/clients/sasa.png"><span>Sasa</span></div>
+                            <div class="carousel-item"><img src="assets/logos/clients/CTF.png"><span>Chow Tai Fook</span></div>
+                            <div class="carousel-item"><img src="assets/logos/clients/prudential.avif"><span>Prudential</span></div>
+                            <div class="carousel-item"><img src="assets/logos/clients/AE.png"><span>Amex</span></div>
+                            <div class="carousel-item"><img src="assets/logos/clients/AUSupreme.jpg"><span>AUSupreme</span></div>
+							<div class="carousel-item"><img src="assets/logos/clients/suntory.gif"><span>Suntory</span></div>
+							<div class="carousel-item"><img src="assets/logos/clients/vans.png"><span>Vans</span></div>
+							<div class="carousel-item"><img src="assets/logos/clients/sasa.png"><span>Sasa</span></div>
+                            <div class="carousel-item"><img src="assets/logos/clients/CTF.png"><span>Chow Tai Fook</span></div>
+                            <div class="carousel-item"><img src="assets/logos/clients/prudential.avif"><span>Prudential</span></div>
+                            <div class="carousel-item"><img src="assets/logos/clients/AE.png"><span>Amex</span></div>
+                            <div class="carousel-item"><img src="assets/logos/clients/AUSupreme.jpg"><span>AUSupreme</span></div>
+							<div class="carousel-item"><img src="assets/logos/clients/suntory.gif"><span>Suntory</span></div>
+							<div class="carousel-item"><img src="assets/logos/clients/vans.png"><span>Vans</span></div>
+							<div class="carousel-item"><img src="assets/logos/clients/vans.png"><span>Vans</span></div>
+						</div>
+                        <div class="carousel-track mb-10">
+							<div class="carousel-item"><img src="assets/logos/clients/mydress.png"><span>MyDress</span></div>
+							<div class="carousel-item"><img src="assets/logos/clients/blackmores.jpg"><span>Blackmores</span></div>
+							<div class="carousel-item"><img src="assets/logos/clients/blackrock.png"><span>Blackrock</span></div>
+                            <div class="carousel-item"><img src="assets/logos/clients/BOC.png"><span>Bank of China</span></div>
+                            <div class="carousel-item"><img src="assets/logos/clients/Nestle.png"><span>Nestle</span></div>
+                            <div class="carousel-item"><img src="assets/logos/clients/haagen-dazs.webp"><span>Haagen-Dazs</span></div>
+                            <div class="carousel-item"><img src="assets/logos/clients/Coke.png"><span>Coca-Cola</span></div>
+							<div class="carousel-item"><img src="assets/logos/clients/mydress.png"><span>MyDress</span></div>
+							<div class="carousel-item"><img src="assets/logos/clients/blackmores.jpg"><span>Blackmores</span></div>
+							<div class="carousel-item"><img src="assets/logos/clients/blackrock.png"><span>Blackrock</span></div>
+                            <div class="carousel-item"><img src="assets/logos/clients/BOC.png"><span>Bank of China</span></div>
+                            <div class="carousel-item"><img src="assets/logos/clients/Nestle.png"><span>Nestle</span></div>
+                            <div class="carousel-item"><img src="assets/logos/clients/haagen-dazs.webp"><span>Haagen-Dazs</span></div>
+                            <div class="carousel-item"><img src="assets/logos/clients/Coke.png"><span>Coca-Cola</span></div>
+						</div>
+                        <div class="carousel-track mb-10">
+                            <div class="carousel-item"><img src="assets/logos/clients/MLB.jpg"><span>MLB Korea</span></div>
+							<div class="carousel-item"><img src="assets/logos/clients/peach john.png"><span>Peach John</span></div>
+							<div class="carousel-item"><img src="assets/logos/clients/la-prairie.png"><span>La Prairie</span></div>
+							<div class="carousel-item"><img src="assets/logos/clients/melvita.jpg"><span>Melvita</span></div>
+							<div class="carousel-item"><img src="assets/logos/clients/LVMH.jpeg"><span>LVMH</span></div>
+							<div class="carousel-item"><img src="assets/logos/clients/NIN JIOM.png"><span>Nin Jiom</span></div>
+							<div class="carousel-item"><img src="assets/logos/clients/EYS.png"><span>Eu Yan Sang</span></div>
+							<div class="carousel-item"><img src="assets/logos/clients/MLB.jpg"><span>MLB Korea</span></div>
+							<div class="carousel-item"><img src="assets/logos/clients/peach john.png"><span>Peach John</span></div>
+							<div class="carousel-item"><img src="assets/logos/clients/la-prairie.png"><span>La Prairie</span></div>
+							<div class="carousel-item"><img src="assets/logos/clients/melvita.jpg"><span>Melvita</span></div>
+							<div class="carousel-item"><img src="assets/logos/clients/LVMH.jpeg"><span>LVMH</span></div>
+							<div class="carousel-item"><img src="assets/logos/clients/NIN JIOM.png"><span>Nin Jiom</span></div>
+							<div class="carousel-item"><img src="assets/logos/clients/EYS.png"><span>Eu Yan Sang</span></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div id="expertise" class="page-content mt-20">
+            <section class="bg-white py-24 px-12 border-b border-gray-100">
+                <div class="max-w-7xl mx-auto flex flex-wrap justify-center gap-16 text-center">
+                    <div class="max-w-[300px]">
+                        <div class="w-24 h-24 mx-auto mb-6 text-brand-orange">
+						<img src="assets/data-analysis.png" class="w-17  h-17 object-contain">
+					</div>
+                        <p class="font-extrabold uppercase text-3xl mb-4">Data Analysis</p>
+                        <p class="text-base text-gray-400">Leveraging GA4, Data Studio etc data for funnel analysis </p>
+						</div>
+                    <div class="max-w-[300px]">
+                        <div class="w-24 h-24 mx-auto mb-6 text-brand-orange">
+						<img src="assets/performance-driven.png" class="w-17  h-17 object-contain">
+						</div>
+                        <p class="font-extrabold uppercase text-3xl mb-4">Result Driven</p>
+                        <p class="text-base text-gray-400">Maximizing ROAS, GMV targets or other KPIs </p>
+						</div>
+                    <div class="max-w-[300px]">
+                        <div class="w-24 h-24 mx-auto mb-6 text-brand-orange">
+						<img src="assets/strategic-planning.png" class="w-17  h-17 object-contain">
+						</div>
+                        <p class="font-extrabold uppercase text-3xl mb-4">Strategic Planning</p>
+                        <p class="text-base text-gray-400">Tailored marketing strategies with full-channel mix</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="py-32 px-12 md:px-24 grid md:grid-cols-12 gap-20">
+                <div class="md:col-span-4 space-y-20 border-r border-gray-100 pr-12">
+                    <div>
+                        <h4 class="text-3xl font-black uppercase mb-8 text-brand-orange">Media Skills & Platforms</h4>
+                        <ul class="text-base font-bold uppercase tracking-widest text-gray-500 space-y-3">
+                            <li>Google Ads </li>
+                            <li>Meta Ads </li>
+                            <li>Apple Search Ads </li>
+                            <li>Bing Ads </li>
+                            <li>LinkedIn Ads </li>
+                            <li>Snapchat Ads </li>
+                            <li>DV360 </li>
+                            <li>DoubleClick </li>
+                            <li>Google Analytics 4 </li>
+                            <li>Adobe Analytics </li>
+                            <li>Looker Studio </li>
+							<li>Google Merchant Center </li>
+							<li>Google Search Console </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-3xl font-black uppercase mb-8 text-brand-orange">Education</h4>
+                        <p class="text-base font-bold uppercase tracking-widest text-gray-500">Degree in Business (Marketing)</p>
+                        <p class="text-xs text-gray-400">University of Tasmania (HKUE campus) </p>
+                    </div>
+                    <div>
+                        <h4 class="text-3xl font-black uppercase mb-8 text-brand-orange">Certificates</h4>
+                        <ul class="text-base font-bold uppercase tracking-widest text-gray-500 space-y-2">
+                            <li>Google Ads Display Certification </li>
+                            <li>Google Ads Search Professional Certification </li>
+                            <li>Facebook Blueprint </li>
+                            <li>WSET Level 2 </li>
+                            <li>Professional Bartender </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-3xl font-black uppercase mb-8 text-brand-orange">Languages</h4>
+                        <div class="space-y-6 text-base font-bold uppercase tracking-widest text-gray-500">
+                            <div class="flex justify-between items-center"><span>Cantonese </span><div><div class="skill-bar active"></div><div class="skill-bar active"></div><div class="skill-bar active"></div><div class="skill-bar active"></div><div class="skill-bar active"></div></div></div>
+                            <div class="flex justify-between items-center"><span>English </span><div><div class="skill-bar active"></div><div class="skill-bar active"></div><div class="skill-bar active"></div><div class="skill-bar active"></div><div class="skill-bar active"></div></div></div>
+                            <div class="flex justify-between items-center"><span>Mandarin </span><div><div class="skill-bar active"></div><div class="skill-bar active"></div><div class="skill-bar active"></div><div class="skill-bar active"></div><div class="skill-bar"></div></div></div>
+                            <div class="flex justify-between items-center"><span>Korean </span><div><div class="skill-bar active"></div><div class="skill-bar active"></div><div class="skill-bar active"></div><div class="skill-bar active"></div><div class="skill-bar"></div></div></div>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="text-3xl font-black uppercase mb-8 text-brand-orange">Availability</h4>
+                        <p class="text-base font-bold text-gray-500 uppercase tracking-widest">1 Month Notice Period </p>
+                    </div>
+                </div>
+
+                <div class="md:col-span-8 space-y-20">
+                    <h2 class="text-7xl font-extrabold uppercase mb-16 underline decoration-brand-orange">Work Experience</h2>
+                    <div class="space-y-24">
+                        <div>
+                            <p class="text-brand-orange font-bold uppercase tracking-widest text-sm mb-4">2024 Dec - Now </p>
+                            <h3 class="text-4xl font-bold uppercase mb-8 group relative">
+								Digital Marketing Specialist @ 
+								<a href="https://91app.com.hk" target="_blank" rel="noopener noreferrer" 
+								   class="text-brand-orange cursor-pointer transition-all group-hover:text-orange-600">
+									91APP HK
+								</a>
+							</h3>
+                            <ul class="text-gray-600 space-y-6 text-xl list-disc pl-6 leading-relaxed">
+								<li><span class="font-bold text-deep-black uppercase">Performance Ownership:</span> Led performance marketing for enterprise retail accounts across Google Ads and Meta Ads, owning eCommerce KPIs including revenue, ROAS, CPA, and purchase growth.</li>
+								<li><span class="font-bold text-deep-black uppercase">Commercial Impact:</span> Delivered measurable account improvements through restructuring and optimization initiatives, including ROAS uplift ranging from +35% to +135%, revenue growth up to +84%, purchase growth up to +126%, and significant reductions in media cost and CPA.</li>
+								<li><span class="font-bold text-deep-black uppercase">Strategic Input Beyond Media:</span> Contributed to broader growth planning by advising on creative direction, campaign messaging, promotional mechanics, brand positioning, product priorities, audience segmentation, and competitor differentiation.</li>
+								<li><span class="font-bold text-deep-black uppercase">Full-Funnel Planning:</span> Worked closely with brand direction, promotional priorities, and customer funnel data to shape acquisition strategy, audience targeting, and conversion-focused media planning.</li>
+								<li><span class="font-bold text-deep-black uppercase">Data-Driven Decision Support:</span> Developed Looker Studio / GA4 reporting frameworks and actively adopted AI and emerging digital tools to speed up analysis, streamline reporting workflows, and enhance day-to-day execution and decision support.</li>
+							</ul>
+                        </div>
+
+                        <div>
+                            <p class="text-brand-orange font-bold uppercase tracking-widest text-sm mb-4">2023 Jul - 2024 Sep </p>
+                            <h3 class="text-4xl font-bold uppercase mb-8">Assistant Manager @ 
+							<a href="https://www.wppmedia.com/" target="_blank" class="text-brand-orange cursor-pointer transition-all group-hover:text-orange-600">
+								GroupM
+							</a></h3>
+                            <ul class="text-gray-600 space-y-6 text-xl list-disc pl-6 leading-relaxed">
+                                <li><span class="font-bold text-deep-black uppercase">Project Management:</span> Actively overseeing the execution and development of media campaigns, ensuring excellent performance is achieved with KPIs completed on time and within budget.</li>
+                                <li><span class="font-bold text-deep-black uppercase">Team Leadership:</span> Managing and mentoring a team of 3 employees, fostering a collaborative environment, and guiding the team towards achieving team goals.</li>
+                                <li><span class="font-bold text-deep-black uppercase">Client Relationship:</span> Building and maintaining strong relationships with clients, understanding their needs for different KPIs, and ensuring their satisfaction with the agency's services.</li>
+                                <li><span class="font-bold text-deep-black uppercase">Strategic Planning:</span> Developed and implemented comprehensive marketing strategies tailored to company goals, market trends, and customer insights, driving brand awareness and revenue growth.</li>
+                                <li><span class="font-bold text-deep-black uppercase">Expertise for diverse Business Objectives:</span> Experience on implementing plans for E-commerce, Branding, awareness campaigns. Concrete ability to drive brand visibility, brand awareness and even conversions.</li>
+                            </ul>
+                        </div>
+                        <button onclick="toggleHistory()" class="text-sm font-black uppercase tracking-[0.4em] text-brand-orange border-b-4 border-brand-orange pb-2">+ Full Career History</button>
+                        <div id="full-history" class="job-detail pt-12 space-y-16">
+                             <div class="space-y-4">
+                                <p class="text-gray-400 font-bold mb-2">2022 Sep - 2023 Jun </p>
+                                <h4 class="text-2xl font-bold uppercase mb-4 italic">Senior Specialist @ <a href="https://www.wppmedia.com/" target="_blank" class="text-brand-orange cursor-pointer transition-all group-hover:text-orange-600">
+								GroupM
+							</a></h4>
+                                <p class="text-gray-500 leading-relaxed text-lg">Main contact person of various accounts, maintaining relationships with client and is responsible for the communication with different teams. </p><p class="text-gray-500 leading-relaxed text-lg">Led a small team of Biddable Specialists to successfully complete various project while maintaining daily work quality. Handling of the Biddable Strategy part for New Client Pitching. </p><p class="text-gray-500 leading-relaxed text-lg">Client industries: FMCG, Banking, Insurance, Gold & Jewelry, Government department, Beauty etc. </p><p class="text-gray-500 leading-relaxed text-lg">Area and Platform of work: GDN, Youtube, SEM, DV360, Apple Search Ads, Bing Ads, Facebook, Linkedin Ad.</p>
+                            </div>
+                            <div class="space-y-4">
+                                <p class="text-gray-400 font-bold mb-2">2021 Sep - 2022 Sep </p>
+                                <h4 class="text-2xl font-bold uppercase mb-4 italic">Specialist (Biddable) @ <a href="https://www.wppmedia.com/" target="_blank" class="text-brand-orange cursor-pointer transition-all group-hover:text-orange-600">
+								GroupM
+							</a></h4>
+                                <p class="text-gray-500 leading-relaxed text-lg">Mainly handled Client serving & Biddable Media Management for Bank Of China. </p><p class="text-gray-500 leading-relaxed text-lg">Area and Platform of work: Google Ads, Google Analysis, Double Click, Facebook, Linkedin Ads, Bing Ads, Apple Search, Snapchat Ads etc. </p><p class="text-gray-500 leading-relaxed text-lg">Client industries: Banking & Finance, FMCG, F&B, Shopping Center etc. Market across Hong Kong, Malaysia, Singapore.</p>
+                            </div>
+                            <div class="space-y-4">
+                                <p class="text-gray-400 font-bold mb-2">2019 Jan - 2020 Sep </p>
+                                <h4 class="text-2xl font-bold uppercase mb-4 italic">Media Executive @ <a href="https://www.ipgmediabrands.com" target="_blank" class="text-brand-orange cursor-pointer transition-all group-hover:text-orange-600">
+								IPG Mediabrands
+							</a></h4>
+                                <p class="text-gray-500 leading-relaxed text-lg">Assisting the team in the preparation of budget allocation & target audience identification for Media Planning. </p><p class="text-gray-500 leading-relaxed text-lg">Responsible for the team's trafficking on DCM for ad serve and ad tracking. </p><p class="text-gray-500 leading-relaxed text-lg">Maintaining good communication with client in understanding their requirement on campaign objective, tackling technical inquiries and plan amendment. </p><p class="text-gray-500 leading-relaxed text-lg">Preparing periodic reports and presentation with analysis and elaboration on campaign performance as required on assigned accounts. Constantly monitoring active campaign's performance and implement optimization whenever needed. </p><p class="text-gray-500 leading-relaxed text-lg">Experience in solo handling several small campaigns from campaign debriefing to post campaign findings and billing.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+<div id="portfolio" class="page-content mt-20">
+    <section class="py-32 px-12 md:px-24">
+        <h2 class="text-8xl font-extrabold uppercase mb-20 italic">The Vault</h2>
+
+        <div class="grid md:grid-cols-1 xl:grid-cols-2 gap-10">
+            <!-- 01 -->
+            <div class="portfolio-card p-12 rounded-[3rem] border border-gray-100 shadow-xl">
+                <div class="case-card">
+                    <div class="case-brand-side">
+                        <div class="case-index">01</div>
+                        <div class="case-logo-frame">
+                            <img src="assets/logos/clients/sasa.png" alt="Sa Sa" class="case-logo">
+                        </div>
+                        <p class="portfolio-kicker">Beauty / eCommerce Case</p>
+                        <h4 class="case-title">SasaHK Performance Turnaround</h4>
+                        <p class="portfolio-period">2025 (Apr - Dec) vs 2023 (Apr - Dec, Previous Agency)</p>
+                    </div>
+
+                    <div class="case-metrics-side">
+                        <div class="metric-box">
+                            <div class="metric-top">
+                                <div class="metric-value count-up" data-target="45.5">0</div>
+                                <div class="metric-symbol">%</div>
+                            </div>
+                            <p class="metric-label">Cost Reduction</p>
+                            <div class="metric-bar">
+                                <div class="metric-fill" data-width="45.5%"></div>
+                            </div>
+                        </div>
+
+                        <div class="metric-box">
+                            <div class="metric-top">
+                                <div class="metric-value count-up" data-target="9.5">0</div>
+                                <div class="metric-symbol">%</div>
+                            </div>
+                            <p class="metric-label">Revenue Growth</p>
+                            <div class="metric-bar">
+                                <div class="metric-fill" data-width="22%"></div>
+                            </div>
+                        </div>
+
+                        <div class="metric-box">
+                            <div class="metric-top">
+                                <div class="metric-value count-up" data-target="101.1">0</div>
+                                <div class="metric-symbol">%</div>
+                            </div>
+                            <p class="metric-label">ROAS Improvement</p>
+                            <div class="metric-bar">
+                                <div class="metric-fill" data-width="78%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 02 -->
+            <div class="portfolio-card p-12 rounded-[3rem] border border-gray-100 shadow-xl">
+                <div class="case-card">
+                    <div class="case-brand-side">
+                        <div class="case-index">02</div>
+                        <div class="case-logo-frame">
+                            <img src="assets/logos/clients/MLB.jpg" alt="MLB Korea" class="case-logo">
+                        </div>
+                        <p class="portfolio-kicker">Fashion / Performance Case</p>
+                        <h4 class="case-title">MLB Efficiency Improvement</h4>
+                        <p class="portfolio-period">2025 Sep - Dec</p>
+                    </div>
+
+                    <div class="case-metrics-side">
+                        <div class="metric-box">
+                            <div class="metric-top">
+                                <div class="metric-value count-up" data-target="135">0</div>
+                                <div class="metric-symbol">%</div>
+                            </div>
+                            <p class="metric-label">ROAS Growth</p>
+                            <div class="metric-bar">
+                                <div class="metric-fill" data-width="88%"></div>
+                            </div>
+                        </div>
+
+                        <div class="metric-box">
+                            <div class="metric-top">
+                                <div class="metric-value count-up" data-target="58">0</div>
+                                <div class="metric-symbol">%</div>
+                            </div>
+                            <p class="metric-label">CPA Reduction</p>
+                            <div class="metric-bar">
+                                <div class="metric-fill" data-width="58%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 03 -->
+            <div class="portfolio-card p-12 rounded-[3rem] border border-gray-100 shadow-xl">
+                <div class="case-card">
+                    <div class="case-brand-side">
+                        <div class="case-index">03</div>
+                        <div class="case-logo-frame">
+                            <img src="assets/logos/clients/melvita.jpg" alt="Melvita" class="case-logo">
+                        </div>
+                        <p class="portfolio-kicker">Beauty / Growth Case</p>
+                        <h4 class="case-title">Melvita Revenue Scaling</h4>
+                        <p class="portfolio-period">2025 May - 2025 Jul</p>
+                    </div>
+
+                    <div class="case-metrics-side">
+                        <div class="metric-box">
+                            <div class="metric-top">
+                                <div class="metric-value count-up" data-target="35">0</div>
+                                <div class="metric-symbol">%</div>
+                            </div>
+                            <p class="metric-label">ROAS Growth</p>
+                            <div class="metric-bar">
+                                <div class="metric-fill" data-width="35%"></div>
+                            </div>
+                        </div>
+
+                        <div class="metric-box">
+                            <div class="metric-top">
+                                <div class="metric-value count-up" data-target="84">0</div>
+                                <div class="metric-symbol">%</div>
+                            </div>
+                            <p class="metric-label">Revenue Growth</p>
+                            <div class="metric-bar">
+                                <div class="metric-fill" data-width="84%"></div>
+                            </div>
+                        </div>
+
+                        <div class="metric-box">
+                            <div class="metric-top">
+                                <div class="metric-value count-up" data-target="126">0</div>
+                                <div class="metric-symbol">%</div>
+                            </div>
+                            <p class="metric-label">Purchase Growth</p>
+                            <div class="metric-bar">
+                                <div class="metric-fill" data-width="92%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 04 -->
+            <div class="portfolio-card p-12 rounded-[3rem] border border-gray-100 shadow-xl">
+                <div class="flex items-start justify-between gap-8 mb-8">
+                    <div class="case-index mb-0">04</div>
+                    <p class="text-sm uppercase tracking-[0.24em] text-brand-orange font-bold mt-3">SEM Transformation</p>
+                </div>
+
+                <h4 class="case-title mb-4">SEM Restructure Projects</h4>
+                <p class="text-lg text-gray-600 leading-relaxed mb-6">
+                    Re-structured SEM account architecture, keyword grouping, campaign segmentation,
+                    and search intent alignment across multiple enterprise brands.
+                </p>
+
+                <div class="restructure-list">
+                    <div class="restructure-pill">Chow Tai Fook</div>
+                    <div class="restructure-pill">Prudential</div>
+                    <div class="restructure-pill">MLB</div>
+                    <div class="restructure-pill">Melvita</div>
+                    <div class="restructure-pill">Bank of China</div>
+                    <div class="restructure-pill">Peach John</div>
+                </div>
+
+                <div class="mini-logo-carousel mt-2">
+                    <div class="mini-logo-track">
+                        <div class="mini-logo-item"><img src="assets/logos/clients/CTF.png" alt="Chow Tai Fook"></div>
+                        <div class="mini-logo-item"><img src="assets/logos/clients/prudential.avif" alt="Prudential"></div>
+                        <div class="mini-logo-item"><img src="assets/logos/clients/MLB.jpg" alt="MLB Korea"></div>
+                        <div class="mini-logo-item"><img src="assets/logos/clients/melvita.jpg" alt="Melvita"></div>
+                        <div class="mini-logo-item"><img src="assets/logos/clients/BOC.png" alt="Bank of China"></div>
+                        <div class="mini-logo-item"><img src="assets/logos/clients/peach john.png" alt="Peach John"></div>
+
+                        <div class="mini-logo-item"><img src="assets/logos/clients/CTF.png" alt="Chow Tai Fook"></div>
+                        <div class="mini-logo-item"><img src="assets/logos/clients/prudential.avif" alt="Prudential"></div>
+                        <div class="mini-logo-item"><img src="assets/logos/clients/MLB.jpg" alt="MLB Korea"></div>
+                        <div class="mini-logo-item"><img src="assets/logos/clients/melvita.jpg" alt="Melvita"></div>
+                        <div class="mini-logo-item"><img src="assets/logos/clients/BOC.png" alt="Bank of China"></div>
+                        <div class="mini-logo-item"><span class="text-logo">Peach John</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+		<div id="work-with-me" class="page-content mt-20 min-h-screen flex items-center justify-center p-12 relative">
+			<div class="absolute inset-0 z-0">
+				<img src="assets/workspace-contact1.png" class="w-full h-full object-cover">
+			</div>
+			<div class="absolute inset-0 bg-white/40 z-10"></div>
+			<!-- 字體不受影響 -->
+			<div class="relative z-20 glass-curve p-20 max-w-5xl w-full flex flex-col items-center text-center border border-white/50 mx-auto" style="top: clamp(120px, 18vh, 250px);">
+				<h2 class="text-7xl font-extrabold uppercase text-brand-orange mb-16">Work With Me</h2>
+                <div class="space-y-12">
+                    <div>
+                        <p class="text-xs uppercase font-bold text-brand-teal tracking-widest mb-4 italic">Direct Email</p>
+                        <a href="mailto:jameschan0220@gmail.com" class="text-4xl font-bold hover:text-brand-orange transition-colors tracking-tight">jameschan0220@gmail.com </a>
+                    </div>
+                    <div>
+                        <p class="text-xs uppercase font-bold text-brand-teal tracking-widest mb-4 italic">Phone / WhatsApp</p>
+                        <span class="text-4xl font-bold tracking-tight">9339 0291 </span>
+                    </div>
+                    <div>
+                        <p class="text-xs uppercase font-bold text-brand-teal tracking-widest mb-4 italic">Location</p>
+                        <span class="text-4xl font-bold tracking-tight">Hong Kong </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer id="global-footer" class="py-24 bg-deep-black text-white px-12 md:px-24">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-left">
+            <div>
+                <h2 class="text-5xl font-extrabold uppercase mb-2">Work With Me</h2>
+            </div>
+            <div class="flex flex-col md:flex-row gap-16">
+                <div>
+                    <span class="text-lg block text-brand-orange font-bold mb-3 italic">✉ EMAIL</span>
+                    <a href="mailto:jameschan0220@gmail.com" class="text-2xl font-bold tracking-tight">jameschan0220@gmail.com </a>
+                </div>
+                <div>
+                    <span class="text-lg block text-brand-orange font-bold mb-3 italic">📞 PHONE / WHATSAPP</span>
+                    <span class="text-2xl font-bold tracking-tight">9339 0291 </span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+	<script>
+		function showPage(pageId) {
+			console.log('切換到頁面:', pageId); // 除錯用，確認函數有執行
+			
+			// 1. 隱藏所有頁面 + nav
+			document.querySelectorAll('.page-content').forEach(p => {
+				p.classList.remove('active');
+				p.style.display = 'none';
+			});
+			document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+
+			// 2. 顯示目標頁面
+			const targetPage = document.getElementById(pageId);
+			if (targetPage) {
+				targetPage.classList.add('active');
+				targetPage.style.display = 'block';
+			}
+
+			// 3. 更新 nav
+			const nav = document.getElementById('nav-' + pageId);
+			if (nav) nav.classList.add('active');
+
+			// 4. 控制 footer
+			const footer = document.getElementById('global-footer');
+			if (pageId === 'work-with-me') {
+				if (footer) footer.style.display = 'none';
+			} else {
+				if (footer) footer.style.display = 'block';
+			}
+
+			window.scrollTo({ top: 0, behavior: 'smooth' });
+		}
+
+		function toggleHistory() {
+			const el = document.getElementById('full-history');
+			if (el) el.classList.toggle('active');
+		}
+    function animatePortfolioMetrics() {
+        const portfolioPage = document.getElementById('portfolio');
+        if (!portfolioPage) return;
+
+        const counters = portfolioPage.querySelectorAll('.count-up');
+        const fills = portfolioPage.querySelectorAll('.metric-fill');
+
+        counters.forEach(counter => {
+            const target = parseFloat(counter.dataset.target || '0');
+            counter.textContent = '0';
+
+            const duration = 1600;
+            const start = performance.now();
+
+            function update(now) {
+                const progress = Math.min((now - start) / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 3);
+                const value = target * eased;
+                counter.textContent = target % 1 !== 0 ? value.toFixed(1) : Math.round(value);
+
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                } else {
+                    counter.textContent = target % 1 !== 0 ? target.toFixed(1) : Math.round(target);
+                }
+            }
+
+            requestAnimationFrame(update);
+        });
+
+        fills.forEach(fill => {
+            fill.style.width = '0';
+            requestAnimationFrame(() => {
+                fill.style.width = fill.dataset.width || '0%';
+            });
+        });
+    }
+
+    const originalShowPage = showPage;
+    showPage = function(pageId) {
+        originalShowPage(pageId);
+
+        if (pageId === 'portfolio') {
+            setTimeout(() => {
+                animatePortfolioMetrics();
+            }, 180);
+        }
+    };
+		// 頁面載入完成後顯示 home
+		window.addEventListener('load', function() {
+			showPage('home');
+		});
+	</script>
+
+</body>
+</html>
